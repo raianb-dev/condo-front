@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <head>
+        <meta charset="utf-8" />
+        <!-- Bootstrap CSS -->
+    
+    
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+        />
+    
+        <title>Encomendas - Dominio</title>
+    
+        <meta name="description" content="" />
+    
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{% static '/assets/img/favicon/favicon.ico' %}" />
+    
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"
+        />
+    
+        <!-- Icons. Uncomment required icon fonts -->
+        <link rel="stylesheet" href="{% static '/assets/vendor/fonts/boxicons.css' %}" />
+        <style>
+            html{
+                zoom: 100%;
+            }
+        </style>
+    
+        <!-- Core CSS -->
+        <link rel="stylesheet" href="{% static '/assets/vendor/css/core.css' %}" class="template-customizer-core-css" />
+        <link rel="stylesheet" href="{% static '/assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css" />
+        <link rel="stylesheet" href="{% static '/assets/css/demo.css' %}" />
+    
+        <!-- Vendors CSS -->
+        <link rel="stylesheet" href="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}" />
+    
+        <!-- Page CSS -->
+    
+        <!-- Helpers -->
+        <script src="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}"></script>
+    
+        <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+        <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+        
+      </head>
+</head>
+<body>
+<!-- Adicione o script do Bootstrap -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<!-- Botão para abrir o modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cameraModal">
+  Abrir Modal
+</button>
+
+<!-- Modal de captura de imagem -->
+<div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cameraModalLabel">Capturar Imagem</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Elemento para visualização da câmera -->
+        <video id="cameraPreview" width="100%" height="auto" autoplay playsinline></video>
+        <!-- Formulário de cadastro de encomendas -->
+        <div class="card mt-3">
+          <div class="card-header">
+            Cadastro de Encomendas
+          </div>
+          <div class="card-body">
+            <form id="encomendaForm">
+              <div class="mb-3">
+                <label for="barcode" class="form-label">Código de Barras</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="barcode" placeholder="TBR012345" aria-label="Barcode" aria-describedby="barcodeButton">
+                  <button class="btn btn-outline-primary" type="button" id="scanButton">Scan</button>
+                </div>
+              </div>
+              <div class="mb-3" id="imagePreview"></div>
+              <!-- Campo oculto para armazenar os dados da imagem -->
+              <input type="hidden" id="imagemCapturada" name="imagemCapturada">
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary" id="captureButton">Capturar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Event listener para o botão "Scan"
+  document.getElementById('scanButton').addEventListener('click', function() {
+    // Simplesmente exibe o modal de captura de imagem
+    var cameraModal = new bootstrap.Modal(document.getElementById('cameraModal'));
+    cameraModal.show();
+
+    // Abre a câmera e exibe a prévia da imagem
+    openCamera();
+  });
+
+  // Função para abrir a câmera e exibir a prévia da imagem
+  function openCamera() {
+    // Tenta acessar a câmera do dispositivo
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function(stream) {
+        var cameraPreview = document.getElementById('cameraPreview');
+        // Exibe a prévia da imagem da câmera no elemento <video>
+        cameraPreview.srcObject = stream;
+      })
+      .catch(function(error) {
+        console.error('Erro ao acessar a câmera:', error);
+      });
+  }
+
+  // Event listener para o botão "Capturar"
+  document.getElementById('captureButton').addEventListener('click', function() {
+    // Captura a imagem
+    var cameraPreview = document.getElementById('cameraPreview');
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    canvas.width = 100; // Define a largura da miniatura como 100px
+    canvas.height = 80; // Define a altura da miniatura como 80px
+    context.drawImage(cameraPreview, 0, 0, canvas.width, canvas.height);
+    var imageData = canvas.toDataURL('image/png');
+    var imagePreview = document.getElementById('imagePreview');
+    var img = document.createElement('img');
+    img.src = imageData;
+    img.alt = 'Preview';
+    img.classList.add('img-thumbnail');
+    // Adiciona a miniatura abaixo do campo "Barcode"
+    imagePreview.innerHTML = '';
+    imagePreview.appendChild(img);
+    // Atualiza o campo oculto com os dados da imagem
+    document.getElementById('imagemCapturada').value = imageData;
+    // Fecha o modal
+    var cameraModal = new bootstrap.Modal(document.getElementById('cameraModal'));
+    cameraModal.hide();
+  });
+</script>
+
+</body>
+</html>

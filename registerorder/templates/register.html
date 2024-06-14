@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>Encomendas - Domínio</title>
+    <meta name="description" content="">
+    <link rel="icon" type="image/x-icon" href="{% static '/assets/img/favicon/favicon.ico' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static '/assets/vendor/fonts/boxicons.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendor/css/core.css' %}" class="template-customizer-core-css">
+    <link rel="stylesheet" href="{% static '/assets/vendor/css/theme-default.css' %}" class="template-customizer-theme-css">
+    <link rel="stylesheet" href="{% static '/assets/css/demo.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}">
+    <script src="{% static '/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css' %}"></script>
+    <script src="{% static '/assets/js/config.js' %}"></script>
+</head>
+<body>
+<div class="">
+    <div class="">
+        <div class="">
+            <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    <div class="navbar-nav align-items-center">
+                        <div class="nav-item d-flex align-items-center">
+                            <i class="bx bx-search fs-4 lh-0"></i>
+                            <input type="text" class="form-control border-0 shadow-none" placeholder="Buscar unidade" aria-label="Search...">
+                        </div>
+                    </div>
+                    <ul class="navbar-nav flex-row align-items-center ms-auto">
+                        <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                            <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                <div class="avatar avatar-online">
+                                    <img src="{% static '/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle">
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0 me-3">
+                                                <div class="avatar avatar-online">
+                                                    <img src="{% static '/assets/img/avatars/1.png' %}" alt class="w-px-40 h-auto rounded-circle">
+                                                </div>
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <span class="fw-semibold d-block">John Doe</span>
+                                                <small class="text-muted">Admin</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-user me-2"></i>
+                                        <span class="align-middle">My Profile</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="bx bx-cog me-2"></i>
+                                        <span class="align-middle">Settings</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <span class="d-flex align-items-center align-middle">
+                                            <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+                                            <span class="flex-grow-1 align-middle">Billing</span>
+                                            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="auth-login-basic.html">
+                                        <i class="bx bx-power-off me-2"></i>
+                                        <span class="align-middle">Log Out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="content-wrapper-cad">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div style="display: flex; justify-content: space-between;">
+                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ordens /</span> Registrar </h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    Cadastro de Encomendas
+                                </div>
+                                <form method="POST" action="{% url 'registerorder' %}">
+                                    {% csrf_token %}
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="barcode" id="barcode" placeholder="COD/BARRAS" aria-label="Barcode" aria-describedby="barcodeButton">
+                                                <button class="btn btn-outline-primary no-hover" type="button" id="scanButton">Scan</button>
+                                            </div>
+                                            <div style="display: flex;">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Apartamento" name="apt">
+                                                </div>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Bloco" name="block">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-3">
+                            <div class="image-upload">
+                                <label for="imageInput" class="image-upload-label">
+                                    <div class="image-placeholder" style="display: block; cursor:pointer" id="imagePlaceholder">
+                                        <img src="{% static 'cam.png' %}" style="scale: 1.2">
+                                        <span>Capturar imagem</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    
+                        <div class="imgbnt">
+                            <div class="col-md-3">
+                                <div class="image-preview">
+                                   <div  id="capturedImage" style="max-width: 100%; max-height: 100%;">
+                                        
+                                    </div>
+                                </i>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="send">
+                                    <input type="submit" value="Enviar">
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    
+                    <script>
+                        const imagePlaceholder = document.getElementById('imagePlaceholder');
+                        const imagePreview = document.querySelector('.image-preview');
+                        const sendInput = document.querySelector('.send input');
+                    
+                        // Adiciona um evento de clique à imagem para iniciar a captura da webcam
+                        imagePlaceholder.addEventListener('click', () => {
+                            // Solicitar acesso à webcam
+                            navigator.mediaDevices.getUserMedia({ video: true })
+                                .then((stream) => {
+                                    // Exibir a webcam no elemento <video>
+                                    const video = document.createElement('video');
+                                    video.srcObject = stream;
+                                    video.play();
+                    
+                                    // Limpar o conteúdo da div image-placeholder e adicionar o vídeo
+                                    imagePlaceholder.innerHTML = '';
+                                    imagePlaceholder.appendChild(video);
+                    
+                                    // Adicionar evento de captura de imagem ao pressionar a tecla de espaço
+                                    document.addEventListener('keydown', captureImage);
+                    
+                                    function captureImage(event) {
+                                        if (event.code === 'Space') {
+                                            const canvas = document.createElement('canvas');
+                                            const context = canvas.getContext('2d');
+                                            canvas.width = 270;
+                                            canvas.height = 180;
+                                            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                            const imageData = canvas.toDataURL('image/png');
+                                            const img = new Image();
+                                            img.src = imageData;
+                                            imagePreview.innerHTML = '';
+                                            imagePreview.appendChild(img);
+                    
+                                            // Mostrar o elemento .send input
+                                            sendInput.style.display = 'block';
+                    
+                                            // Remover o evento de captura de imagem após a primeira captura
+                                            document.removeEventListener('keydown', captureImage);
+                                        }
+                                    }
+                                })
+                                .catch((err) => {
+                                    console.error('Erro ao acessar a webcam:', err);
+                                });
+                        });
+                    </script>
+                    
+                    
+                    
+                    
+                    
+
+                    
+                    
+
+                    
+                </div>
+            </div>
+            <footer class="content-footer footer bg-footer-theme">
+            </footer>
+            <div class="content-backdrop fade"></div>
+        </div>
+        <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <script src="{% static '/assets/js/main.js' %}"></script>
+    <script>
+        document.getElementById('scanButton').addEventListener('click', function() {
+            // Simular a leitura do código de barras automaticamente
+            var barcode = '1234567890'; // Substituir com a lógica real de leitura de código de barras
+            document.getElementById('barcode').value = barcode;
+        
+            // Abrir a câmera automaticamente
+            var cameraModal = new bootstrap.Modal(document.getElementById('cameraModal'));
+            
+            cameraModal.show();
+            openCamera();
+        
+            // Adicionar novamente a classe no-hover após abrir o modal
+            document.getElementById('protocolButton').classList.add('no-hover');
+        });
+
+        function openCamera() {
+            // Simular a abertura da câmera
+            // Aqui você pode adicionar a lógica para abrir a câmera do dispositivo
+        }
+
+        document.getElementById('protocolButton').addEventListener('click', function() {
+            // Simular a protocolação da encomenda
+            // Aqui você pode adicionar a lógica para protocolar a encomenda
+            alert('Encomenda protocolada com sucesso!');
+
+            // Redirecionar para o painel após a conclusão
+            window.location.href = '/painel'; // Substituir com o URL do painel
+        });
+    </script>
+</body>
+</form>
