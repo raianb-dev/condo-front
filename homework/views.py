@@ -11,7 +11,7 @@ def redirect_home(request):
         limit = request.POST.get('limit')
         skip_value = request.POST.get('skip', '')  # Evita que seja uma string vazia
         skip = int(skip_value) if skip_value else 0  # Se skip_value estiver vazio, atribui 0
-    response = requests.get(f'http://api.appdominio.pro/v1/api/orders?clientId=87010f8c-e1fe-4ac4-a4f3-7d2667c7662e&skip={skip}&limit={limit}')
+    response = requests.get(f'https://api.appdominio.pro/v1/api/orders?clientId=87010f8c-e1fe-4ac4-a4f3-7d2667c7662e&skip={skip}&limit={limit}')
     data = response.json()
     
     # Formate a data antes de passá-la para o template

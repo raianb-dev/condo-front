@@ -24,7 +24,7 @@ def redirectorder(request):
             "block": block
         }
 
-        req = requests.post(url="http://api.appdominio.pro/v1/api/order", json=data)
+        req = requests.post(url="https://api.appdominio.pro/v1/api/order", json=data)
         req_json = req.json()
 
         if "content" in req_json and "id" in req_json["content"]:
@@ -36,7 +36,7 @@ def redirectorder(request):
                     "base64": image_base64
                 }
 
-                req_image = requests.post(url="http://api.appdominio.pro/v1/api/order/image", json=image_data)
+                req_image = requests.post(url="https://api.appdominio.pro/v1/api/order/image", json=image_data)
                 print(req_image.text)
 
         return redirect(reverse('homework'))
