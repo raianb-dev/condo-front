@@ -14,7 +14,7 @@ def redirect_login(request):
             "username": email,
             "pwd": password
         }
-        status = requests.post(url='http://localhost:4000/v1/api/account/login', json=data)
+        status = requests.post(url='http://api.appdominio.pro/v1/api/account/login', json=data)
         
         req = status.text
         data = json.loads(req)
